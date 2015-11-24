@@ -42,4 +42,4 @@ function clean-vsextcache {
 	}
 }
 
-Export-ModuleMember Invoke-Vsvars32
+Export-ModuleMember Invoke-Vsvars32 Get-BatchFile
