@@ -26,8 +26,35 @@ function Invoke-VsVars32 {
     #Set-ConsoleIcon ($env:userprofile + "\utils\resources\vspowershell.ico")
 }
 
-function clean-vsextcache {
-	param( $ver = "10.0exp" )
+function Set-MsBuildEnv {
+    param (
+        [String] $version = "14.0",
+        [ValidateSet("x64", "x86")]
+        [String] $arch = "x64"
+    )
+    
+    if($arch -eq "x64")
+    {
+        $rootKeyName = ("HKLM:Software\Microsoft\MSBuild\ToolsVersions\$version")
+    }
+    else
+    {
+        $rootKeyName = ("HKLM:SOFTWARE\Wow6432Node\Microsoft\MSBuild\ToolsVersions\$version")
+    }
+    
+    $rootKey = Get-Item -Path $rootKeyName
+    if($rootKey -eq $null)
+    {
+        throw ("MSBuild version $version not found")
+    }
+
+    $msbuildPath = $rootKey.GetValue("MSBuildToolsPath", $false);
+
+    $env:PATH = ("$msbuildPath;$env:PATH")
+}
+
+function Delete-VsExtCache {
+	param( $ver = "12.0exp" )
 
 	$dir = "$home\AppData\Local\Microsoft\VisualStudio\$ver\ComponentModelCache"
 	if (test-path $dir) {
@@ -42,4 +69,4 @@ function clean-vsextcache {
 	}
 }
 
-Export-ModuleMember Invoke-Vsvars32 Get-BatchFile
+Export-ModuleMember Invoke-Vsvars32, Get-BatchFile, Set-MSBuildEnv
