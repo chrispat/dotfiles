@@ -21,7 +21,7 @@ New-Junction $sourcePath $targetPath
 
 Write-Host "Finding startup.reg"
 $startupReg = Get-Item -Path .\startup.reg
-Write-Host ("Importing $startupReg.FullName")
+Write-Host ("Importing $startupReg")
 cmd /c reg import $startupReg.FullName
 
 Write-Host "Complete"
