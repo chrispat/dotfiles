@@ -20,7 +20,7 @@ $env:PSModulePath = $env:PSModulePath + ';' + (join-path $scripts modules)
 $env:Path = $env:Path + ';' + (Join-Path -Path $env:USERPROFILE -ChildPath "utils\bin")
 
 # Remove unnecessary built in alias
-Remove-Item Alias:\curl
+if (test-path Alias:\curl) { remove-item Alias:\curl -force }
 
 function get-isAdminUser() {
 	$id = [Security.Principal.WindowsIdentity]::GetCurrent()
