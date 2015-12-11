@@ -9,15 +9,18 @@
 if (-not $global:home) { $global:home = (resolve-path ~) }
 
 # A couple of directory variables for convenience
-$dotfiles = resolve-path ~/dotfiles/
+
+$dotfiles = resolve-path -Path (Join-Path -Path $env:USERPROFILE -ChildPath "dotfiles")
 $scripts = join-path $dotfiles "powershell"
 
 # Modules are stored here
 $env:PSModulePath = $env:PSModulePath + ';' + (join-path $scripts modules)
 
+# Update Path
+$env:Path = $env:Path + ';' + (Join-Path -Path $env:USERPROFILE -ChildPath "utils\bin")
 
-# Load posh-git module
-# Import-Module "Posh-Git"
+# Remove unnecessary built in alias
+Remove-Item Alias:\curl
 
 function get-isAdminUser() {
 	$id = [Security.Principal.WindowsIdentity]::GetCurrent()
