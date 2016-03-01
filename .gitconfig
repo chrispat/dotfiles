@@ -1,0 +1,43 @@
+[credential]
+[push]
+	default = upstream
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[user]
+	name = Chris Patterson
+	email = chrispat@microsoft.com
+[core]
+	editor = code
+	autocrlf = true
+	excludesfile = ~/.gitignore
+[diff]
+	tool = vsdiffmerge
+[difftool]
+	prompt = true
+[difftool "vsdiffmerge"]
+	cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\" \"$LOCAL\" \"$REMOTE\" //t
+[difftool "vsdiffmerge"]
+	keepbackup = false
+[merge]
+	tool = vsdiffmerge
+[mergetool]
+	prompt = true
+[mergetool "vsdiffmerge"]
+	cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\vsdiffmerge.exe\" \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\" //m
+	trustexitcode = true
+[mergetool "vsdiffmerge"]
+	keepbackup = false
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+[color]
+	diff = auto
+	status = auto
+	branch = auto
